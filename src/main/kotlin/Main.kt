@@ -1,16 +1,14 @@
 import com.big.river.algorithm.BasicAlgorithm
 import com.big.river.algorithm.TripleDESAlgorithm
 import com.big.river.helper.ByteHelper
-import com.big.river.tlv.TLVHelper
 import java.text.SimpleDateFormat
 import java.util.*
 
 fun main(args: Array<String>) {
-    val data = "ggI5AIQHoAAAAAQQEJUFAAAEgACaAyMGAZwBAF8qAgeEXzQBAJ8CBgAAAAABAJ8DBgAAAAAAAJ8JAgACnxASAhCgQAEiCAAAAAAAAAAAAP//nxoCB4SfHggwMDAwMDkwNZ8mCBVOrWX+IOrnnycBgJ8zA+D4yJ80A0IDAJ81ASKfNgIAJp83BJLn9wk="
+    val data = "CJCP9OChMRDQ/eHhoTEgATI6IjgqMTMwKjg0NCo3NjUqMCo4OTI3MDc2OTkxNDU2MDYzNDU4MjM5MDAxOTAwMDAxMDAqMSo1RiUyMw=="
     val bytes = Base64.getDecoder().decode(data)
-    val string = ByteHelper.bytes2HexString(bytes)
+    val string = String(bytes)
     println(string)
-    TLVHelper.builderMap(bytes)
 }
 
 private fun testEncrypt() {

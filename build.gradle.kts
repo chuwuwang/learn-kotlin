@@ -4,14 +4,14 @@ plugins {
 }
 
 group = "org.ktx"
-version = "1.0-SNAPSHOT"
+version = "1.1.3-SNAPSHOT"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    // testImplementation( kotlin("test") )
+    implementation( fileTree( mapOf("dir" to "libs", "include" to listOf("*.jar") ) ) )
 }
 
 tasks.test {
