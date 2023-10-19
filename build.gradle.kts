@@ -12,6 +12,7 @@ repositories {
 
 dependencies {
     implementation( fileTree( mapOf("dir" to "libs", "include" to listOf("*.jar") ) ) )
+    implementation("com.google.code.gson:gson:2.10.1")
 }
 
 tasks.test {

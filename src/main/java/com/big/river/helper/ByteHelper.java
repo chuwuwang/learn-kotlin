@@ -4,6 +4,14 @@ import java.nio.charset.Charset;
 
 public class ByteHelper {
 
+    public static String byte2HexString(byte b) {
+        String string = Integer.toHexString(0xFF & b);
+        if (string.length() == 1) {
+            string = "0" + string;
+        }
+        return string.toUpperCase();
+    }
+
     public static String bytes2HexString(byte[] bytes) {
         if (bytes == null || bytes.length == 0) return null;
         StringBuilder sb = new StringBuilder();

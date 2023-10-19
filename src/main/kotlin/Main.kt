@@ -1,13 +1,21 @@
 import com.big.river.algorithm.BasicAlgorithm
 import com.big.river.algorithm.TripleDESAlgorithm
 import com.big.river.helper.ByteHelper
+import com.big.river.wave.StringHelper
 import java.text.SimpleDateFormat
 import java.util.*
 
 fun main(args: Array<String>) {
-    val data = "CJCP9OChMRDQ/eHhoTEgATI6IjgqMTMwKjg0NCo3NjUqMCo4OTI3MDc2OTkxNDU2MDYzNDU4MjM5MDAxOTAwMDAxMDAqMSo1RiUyMw=="
-    val bytes = Base64.getDecoder().decode(data)
-    val string = String(bytes)
+    var data = "EAQHpF8="
+    var bytes = Base64.getDecoder().decode(data)
+    var string = ByteHelper.bytes2HexString(bytes);
+    println(string)
+
+    string = "4144203135340000"
+    string = StringHelper.removeSpecificCharacters(string)
+    println(string)
+
+    string = ByteHelper.hexString2String("303036303630303030303030303030303030303833333330303030303833333530303030303833333330303030353030303030303030303030303030303030303030303030303030303030303030")
     println(string)
 }
 
