@@ -1,22 +1,38 @@
 import com.big.river.algorithm.BasicAlgorithm
 import com.big.river.algorithm.TripleDESAlgorithm
 import com.big.river.helper.ByteHelper
-import com.big.river.wave.StringHelper
+import com.big.river.pin.block.PinBlockHelper
+import com.big.river.tlv.TLVHelper
 import java.text.SimpleDateFormat
 import java.util.*
 
 fun main(args: Array<String>) {
-    var data = "EAQHpF8="
-    var bytes = Base64.getDecoder().decode(data)
-    var string = ByteHelper.bytes2HexString(bytes);
-    println(string)
 
-    string = "4144203135340000"
-    string = StringHelper.removeSpecificCharacters(string)
-    println(string)
+    PinBlockHelper().calculatePlaintextPIN()
 
-    string = ByteHelper.hexString2String("303036303630303030303030303030303030303833333330303030303833333530303030303833333330303030353030303030303030303030303030303030303030303030303030303030303030")
-    println(string)
+}
+
+private fun parseDateString() {
+    val pattern = "yyyy-MM-dd" + "'T'" + "HH:mm:ss.SSS" + "Z"
+
+    var simpleDateFormat = SimpleDateFormat(pattern)
+    simpleDateFormat.timeZone = TimeZone.getTimeZone("GMT+0:00")
+    // simpleDateFormat.format(date)
+    val date = simpleDateFormat.parse("2023-12-29T13:16:11.706+0000")
+
+    simpleDateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+    // simpleDateFormat.timeZone = TimeZone.getTimeZone("GMT+4:00")
+    val format = simpleDateFormat.format(date)
+    println(format)
+}
+
+private fun parserIccData() {
+    val data =
+        "ggJ8AIQIoAAAAzMBAQGVBQAAAAAAmgMkASOcAQBfKgIHhF80AQCfAgYAAAAAAAGfAwYAAAAAAACfCQIAMJ8QFgcBAQOgAAABDaE5mQFnICQBIxUpGICfGgIHhJ8eCDAwMDAwOTA1nyYIT2uNQBl751OfJwGAnzMD4PjInzUBIp82AgABnzcEAKopug=="
+    val bytes = Base64.getDecoder().decode(data)
+    val hexString = ByteHelper.bytes2HexString(bytes)
+    println(hexString)
+    TLVHelper.builderMap(hexString)
 }
 
 private fun testEncrypt() {

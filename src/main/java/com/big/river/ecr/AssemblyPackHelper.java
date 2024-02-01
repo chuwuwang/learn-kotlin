@@ -1,6 +1,5 @@
 package com.big.river.ecr;
 
-
 import com.big.river.helper.ByteHelper;
 
 /**
