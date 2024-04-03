@@ -88,4 +88,15 @@ public class ByteHelper {
         return new String(bytes);
     }
 
+    public static String removeInvisibleCharacters(final String string) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < string.length(); i++) {
+            char c = string.charAt(i);
+            if (c >= 32 && c <= 126) {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
+    }
+
 }

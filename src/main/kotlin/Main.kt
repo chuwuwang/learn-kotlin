@@ -1,16 +1,68 @@
 import com.big.river.algorithm.BasicAlgorithm
 import com.big.river.algorithm.TripleDESAlgorithm
+import com.big.river.ecr.AssemblyPackHelper
 import com.big.river.helper.ByteHelper
-import com.big.river.pin.block.PinBlockHelper
+import com.big.river.hlb.SaleReq
+import com.big.river.hlb.VoidReq
 import com.big.river.tlv.TLVHelper
+import com.google.gson.Gson
+import java.nio.charset.Charset
 import java.text.SimpleDateFormat
 import java.util.*
 
 fun main(args: Array<String>) {
 
-    PinBlockHelper().calculatePlaintextPIN()
+    parserBase64Data("PC9FbnZscGREYXRhPjwvTmNycHRkUElOQmxjaz48UElORnJtdD5JU08wPC9QSU5Gcm10PjwvQ3JkaGxkck9uTGluZVBJTj48L0F1dGhudGNuPjxObT4AADwvTm0+")
+    parserBase64Data("PC9DYXJkPjxDcmRobGRyPjxObT4gIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvTm0+")
+    // PinBlockHelper().calculatePlaintextPIN()
+
+    var bytes = "<Nm>".toByteArray(charset = charset)
+    var hexString = ByteHelper.bytes2HexString(bytes)
+    println(hexString)
+
+    bytes = "</Nm>".toByteArray(charset = charset)
+    hexString = ByteHelper.bytes2HexString(bytes)
+    println(hexString)
+
+    var value = ByteHelper.hexString2AsciiString("0000")
+    println(value)
+
+    value = ByteHelper.hexString2AsciiString("2020000000000000000000000000000000000000000000000000")
+    println(value)
+
+    value = ByteHelper.hexString2GBKString("2020000000000000000000000000000000000000000000000000")
+    println(value)
+
+    println("-----------------")
+    val invisibleCharacters = ByteHelper.removeInvisibleCharacters(value)
+    println(invisibleCharacters)
+    println("-----------------")
+
+    val saleReq = SaleReq()
+    saleReq.transType = 0
+    saleReq.transId = "123456789"
+    saleReq.paymentType = 0
+    saleReq.amount = 1
+    var jsonString = Gson().toJson(saleReq)
+    bytes = jsonString.toByteArray()
+    value = ByteHelper.bytes2HexString(bytes)
+    var assembly = AssemblyPackHelper().assembly(value)
+    println("Sale ---> $assembly")
+
+    val voidReq = VoidReq()
+    voidReq.transType = 1
+    voidReq.transId = "123456789"
+    voidReq.oriVoucherNo = "000005"
+    jsonString = Gson().toJson(voidReq)
+    bytes = jsonString.toByteArray()
+    value = ByteHelper.bytes2HexString(bytes)
+    assembly = AssemblyPackHelper().assembly(value)
+    println("Void ---> $assembly")
+    println("-----------------")
 
 }
+
+val charset: Charset = Charset.forName("US-ASCII")
 
 private fun parseDateString() {
     val pattern = "yyyy-MM-dd" + "'T'" + "HH:mm:ss.SSS" + "Z"
@@ -33,6 +85,14 @@ private fun parserIccData() {
     val hexString = ByteHelper.bytes2HexString(bytes)
     println(hexString)
     TLVHelper.builderMap(hexString)
+}
+
+private fun parserBase64Data(data: String) {
+    val bytes = Base64.getDecoder().decode(data)
+    val string = String(bytes)
+    println(string)
+    val hexString = ByteHelper.bytes2HexString(bytes)
+    println(hexString)
 }
 
 private fun testEncrypt() {
