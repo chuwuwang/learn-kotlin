@@ -13,6 +13,9 @@ repositories {
 dependencies {
     implementation( fileTree( mapOf("dir" to "libs", "include" to listOf("*.jar") ) ) )
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation("commons-lang:commons-lang:2.6")
+    // https://mvnrepository.com/artifact/org.jpos/jpos
+    implementation("org.jpos:jpos:2.1.4")
 }
 
 tasks.test {
