@@ -1,91 +1,13 @@
-import com.big.river.algorithm.BasicAlgorithm
-import com.big.river.algorithm.TripleDESAlgorithm
-import com.big.river.ecr.AssemblyPackHelper
-import com.big.river.helper.Base64UrlHelper
 import com.big.river.helper.ByteHelper
-import com.big.river.hlb.SaleReq
-import com.big.river.hlb.VoidReq
 import com.big.river.tlv.TLVHelper
-import com.google.gson.Gson
 import java.nio.charset.Charset
 import java.text.SimpleDateFormat
 import java.util.*
 
 fun main(args: Array<String>) {
 
-    parserBase64Data("PC9FbnZscGREYXRhPjwvTmNycHRkUElOQmxjaz48UElORnJtdD5JU08wPC9QSU5Gcm10PjwvQ3JkaGxkck9uTGluZVBJTj48L0F1dGhudGNuPjxObT4AADwvTm0+")
-    parserBase64Data("PC9DYXJkPjxDcmRobGRyPjxObT4gIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwvTm0+")
-    // PinBlockHelper().calculatePlaintextPIN()
+    
 
-    var bytes = "<Nm>".toByteArray(charset = charset)
-    var hexString = ByteHelper.bytes2HexString(bytes)
-    println(hexString)
-
-    bytes = "</Nm>".toByteArray(charset = charset)
-    hexString = ByteHelper.bytes2HexString(bytes)
-    println(hexString)
-
-    var value = ByteHelper.hexString2AsciiString("0000")
-    println(value)
-
-    value = ByteHelper.hexString2AsciiString("2020000000000000000000000000000000000000000000000000")
-    println(value)
-
-    value = ByteHelper.hexString2GBKString("2020000000000000000000000000000000000000000000000000")
-    println(value)
-
-    println("-----------------")
-    val invisibleCharacters = ByteHelper.removeInvisibleCharacters(value)
-    println(invisibleCharacters)
-    println("-----------------")
-
-    val saleReq = SaleReq()
-    saleReq.transType = 0
-    saleReq.transId = "123456789"
-    saleReq.paymentType = 0
-    saleReq.amount = 1
-    var jsonString = Gson().toJson(saleReq)
-    bytes = jsonString.toByteArray()
-    value = ByteHelper.bytes2HexString(bytes)
-    var assembly = AssemblyPackHelper().assembly(value)
-    println("Sale ---> $assembly")
-
-    val voidReq = VoidReq()
-    voidReq.transType = 1
-    voidReq.transId = "123456789"
-    voidReq.oriVoucherNo = "000005"
-    jsonString = Gson().toJson(voidReq)
-    bytes = jsonString.toByteArray()
-    value = ByteHelper.bytes2HexString(bytes)
-    assembly = AssemblyPackHelper().assembly(value)
-    println("Void ---> $assembly")
-    println("-----------------")
-
-    testXOR()
-}
-
-private fun testXOR() {
-    val zero = ByteHelper.hexString2Bytes("0000000000000000000000000000000000000000000000000000000000000000")
-    val arg1 = ByteHelper.hexString2Bytes("9E7402DC7C25384EAA9C8A62D921EF95B28BC8EB1F04AB89")
-    var kcv = TripleDESAlgorithm.encrypt3DesECB(arg1, zero)
-    var hexString = ByteHelper.bytes2HexString(kcv)
-    println("arg1 kcv ---> $hexString")
-
-    val arg2 = ByteHelper.hexString2Bytes("69F250829445B4FD70FF190DD578DD171C58D77AD48BC85B")
-    kcv = TripleDESAlgorithm.encrypt3DesECB(arg2, zero)
-    hexString = ByteHelper.bytes2HexString(kcv)
-    println("arg2 kcv ---> $hexString")
-
-    val arg3 = ByteHelper.hexString2Bytes("260F37B32132A6231B187826F5296F654BA09583AED6B15B")
-    kcv = TripleDESAlgorithm.encrypt3DesECB(arg3, zero)
-    hexString = ByteHelper.bytes2HexString(kcv)
-    println("arg3 kcv ---> $hexString")
-
-    var bytes = BasicAlgorithm.xor(arg1, arg2)
-    bytes = BasicAlgorithm.xor(bytes, arg3)
-    kcv = BasicAlgorithm.xor(bytes, zero)
-    hexString = ByteHelper.bytes2HexString(kcv)
-    println("final kcv ---> $hexString")
 }
 
 val charset: Charset = Charset.forName("US-ASCII")
@@ -119,19 +41,6 @@ private fun parserBase64Data(data: String) {
     println(string)
     val hexString = ByteHelper.bytes2HexString(bytes)
     println(hexString)
-}
-
-private fun testEncrypt() {
-    val bytes = ByteHelper.hexString2Bytes("111111111111111111111111111111111111111111111111")
-    val arg = ByteHelper.hexString2Bytes("C1293E2C4A2F4073162CD0C2A8D5C8529D200BFD327CF48C")
-    val resultBytes = BasicAlgorithm.xor(bytes, arg)
-    val hexString = ByteHelper.bytes2HexString(resultBytes)
-    println(hexString)
-
-    val dataBytes = ByteHelper.hexString2Bytes("000000000000000000000000000000000000000000000000")
-    val checkValueBytes = TripleDESAlgorithm.encrypt3DesECB(arg, dataBytes)
-    val checkValue = ByteHelper.bytes2HexString(checkValueBytes)
-    println(checkValue)
 }
 
 private fun testDate() {

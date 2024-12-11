@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "org.ktx"
-version = "1.1.3-SNAPSHOT"
+version = "1.1.4-SNAPSHOT"
 
 repositories {
     mavenCentral()
@@ -16,6 +16,8 @@ dependencies {
     implementation("commons-lang:commons-lang:2.6")
     // https://mvnrepository.com/artifact/org.jpos/jpos
     implementation("org.jpos:jpos:2.1.4")
+    // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
+    implementation("org.bouncycastle:bcprov-jdk15on:1.70")
 }
 
 tasks.test {
