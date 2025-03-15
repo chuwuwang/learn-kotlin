@@ -4,20 +4,23 @@ plugins {
 }
 
 group = "org.ktx"
-version = "1.1.4-SNAPSHOT"
+version = "1.1.5-SNAPSHOT"
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    implementation( fileTree( mapOf("dir" to "libs", "include" to listOf("*.jar") ) ) )
+    val pair = "include" to listOf("*.jar")
+    val map = mapOf("dir" to "libs", pair)
+    val fileTree = fileTree(map)
+    implementation(fileTree)
     implementation("com.google.code.gson:gson:2.10.1")
     implementation("commons-lang:commons-lang:2.6")
     // https://mvnrepository.com/artifact/org.jpos/jpos
     implementation("org.jpos:jpos:2.1.4")
-    // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
-    implementation("org.bouncycastle:bcprov-jdk15on:1.70")
+    // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk18on
+    implementation("org.bouncycastle:bcprov-jdk18on:1.78")
 }
 
 tasks.test {

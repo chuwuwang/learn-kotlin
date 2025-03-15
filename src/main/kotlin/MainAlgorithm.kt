@@ -1,3 +1,4 @@
+import com.big.river.algorithm.BCTR31KeyAlgorithm
 import com.big.river.algorithm.BasicAlgorithm
 import com.big.river.algorithm.CMACAlgorithm
 import com.big.river.algorithm.TripleDESAlgorithm
@@ -5,8 +6,17 @@ import com.big.river.helper.ByteHelper
 
 fun main(args: Array<String>) {
 
-    testCMAC()
+    testTR31ByBC()
 
+}
+
+fun testTR31ByBC() {
+    val kek = ByteHelper.hexString2Bytes("D18965EDC9522A90C17BEB49F9705DE7E5738A126559D289C78241CB099227B7")
+    // val encryptedKey = ByteHelper.hexString2Bytes("D0144K0AB00S0000A9FAE698617ECF056256A1554095342A38510F3EEF5B1BC8D4596720A128CE785CFFBA0138180DBF329D80A1BAE95A0F84078FE8CE2D305F0C0ECFAAA80789B4")
+    val encryptedKey = "D0144K0AB00S0000A9FAE698617ECF056256A1554095342A38510F3EEF5B1BC8D4596720A128CE785CFFBA0138180DBF329D80A1BAE95A0F84078FE8CE2D305F0C0ECFAAA80789B4"
+    val bytes = BCTR31KeyAlgorithm.parseKeyBlock(encryptedKey, kek, "AES")
+    val hexString = ByteHelper.bytes2HexString(bytes)
+    println("key ---> $hexString")
 }
 
 fun testCMAC() {
