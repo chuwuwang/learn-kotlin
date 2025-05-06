@@ -1,3 +1,4 @@
+import com.big.river.card.APDUAnalysis
 import com.big.river.helper.ByteHelper
 import com.big.river.helper.ResourceUtil
 import com.big.river.tlv.TLVHelper
@@ -9,6 +10,14 @@ fun main(args: Array<String>) {
     val fileText = ResourceUtil.getFileText("src\\resources\\MCA-A000000615-001-241213.pca")
     val hexString = ByteHelper.bytes2HexString(fileText)
     println(hexString)
+    analysisAPDU()
+}
+
+
+private fun analysisAPDU() {
+    val apdu =
+        "6F30840E325041592E5359532E4444463031A51EBF0C1B61194F08A000000333010101500A50424F432044454249548701019000"
+    APDUAnalysis.getCardInfo(apdu)
 }
 
 val charset: Charset = Charset.forName("US-ASCII")
