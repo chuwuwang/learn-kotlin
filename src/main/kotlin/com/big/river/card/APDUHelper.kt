@@ -8,6 +8,17 @@ import net.sf.scuba.smartcards.ResponseAPDU
 
 object APDUHelper {
 
+    fun getCommandAPDUData(apdu: String): String ? {
+        try {
+            val bytes = ByteHelper.hexString2Bytes(apdu)
+            val command = CommandAPDU(bytes)
+            return ByteHelper.bytes2HexString(command.data)
+        } catch (e: Throwable) {
+            e.printStackTrace()
+        }
+        return null
+    }
+
     fun parserCommandAPDU(apdu: String): Map<String, TLV> ? {
         try {
             val bytes = ByteHelper.hexString2Bytes(apdu)
