@@ -42,57 +42,6 @@ object TLVHelper {
         return map
     }
 
-    fun builderMapByResponseDE55(hexString: String): Map< String, List<TLV> > {
-        var position = 0
-        val hexStringUpper = hexString.uppercase()
-        val value71List: ArrayList<TLV> = ArrayList()
-        val value72List: ArrayList<TLV> = ArrayList()
-        val value91List: ArrayList<TLV> = ArrayList()
-        val map: HashMap< String, List<TLV> > = HashMap()
-        try {
-            while (hexStringUpper.length > position) {
-                // get tag
-                val tag = getTag(hexString = hexStringUpper, position = position)
-                if (tag.isBlank() || tag == "00") {
-                    break
-                }
-
-                position += tag.length
-
-                // get length
-                val pair = getLength(hexStringUpper, position)
-                val length = pair.first
-
-                position += pair.second
-
-                // get value
-                val value = hexStringUpper.substring(position, position + length * 2)
-
-                position += value.length
-
-                if ("71" == tag) {
-                    val tlv = TLV("71", length, value)
-                    value71List.add(tlv)
-                }
-                if ("72" == tag) {
-                    val tlv = TLV("72", length, value)
-                    value72List.add(tlv)
-                }
-                if ("91" == tag) {
-                    val tlv = TLV("91", length, value)
-                    value91List.add(tlv)
-                }
-                println("$tag : $value")
-            }
-            map["71"] = value71List
-            map["72"] = value72List
-            map["91"] = value91List
-        } catch (e: Throwable) {
-            e.printStackTrace()
-        }
-        return map
-    }
-
     fun tlv2HexString(tlv: TLV): String {
         val builder = StringBuilder()
         val length: String = length2HexString(tlv.length)
@@ -110,7 +59,7 @@ object TLVHelper {
     /**
      * 取子域tag标签, tag标签不仅包含1个字节, 2个字节, 还包含3个字节
      */
-    private fun getTag(hexString: String, position: Int): String {
+    fun getTag(hexString: String, position: Int): String {
         val tag: String
 
         val tagString = hexString.substring(position, position + 2)
@@ -140,7 +89,7 @@ object TLVHelper {
      * 如果第一个字节的最高位b8为0, 则b7~b1的值就是value域的长度
      * 如果b8为1, b7~b1的值指示了下面有几个子字节, 下面子字节的值就是value域的长度
      */
-    private fun getLength(hexString: String, position: Int): Pair<Int, Int> {
+    fun getLength(hexString: String, position: Int): Pair<Int, Int> {
         var size: Int
 
         var lengthString = hexString.substring(position, position + 2)
