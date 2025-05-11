@@ -1,6 +1,7 @@
 import com.big.river.card.APDUCardHelper
-import com.big.river.card.APDUHelper
 import com.big.river.card.APDUTransactionHelper
+import com.big.river.card.TransactionAssist
+import com.big.river.card.TransactionInfo
 import com.big.river.helper.ByteHelper
 import com.big.river.tlv.TLVHelper
 import java.nio.charset.Charset
@@ -9,7 +10,9 @@ import java.util.*
 val charset: Charset = Charset.forName("US-ASCII")
 
 fun main(args: Array<String>) {
-    analysisAPDU()
+
+    transactionInfo()
+
 }
 
 private fun analysisAPDU() {
@@ -45,6 +48,15 @@ private fun analysisAPDU() {
         "80AE90004200000000050000000000000004580000008001045825050300A6A2465822000000000000000000001F0302235036000000000000000000000000000000000000000000"
     APDUTransactionHelper.builderTransactionTagMap(apdu, tagList)
 
+}
+
+private fun transactionInfo(){
+    val info = TransactionInfo()
+    info.amount = 10000
+    info.cardNumber = "2123131"
+    info.currencyCode = "0156"
+    info.transactionDate = "250511"
+    TransactionAssist.onCallbackTransactionInfo(info)
 }
 
 private fun parserIccData() {
