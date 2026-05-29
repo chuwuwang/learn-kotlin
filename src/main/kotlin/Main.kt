@@ -1,12 +1,10 @@
-import com.big.river.helper.ByteHelper
-import com.big.river.helper.ResourceUtil
 import java.text.SimpleDateFormat
 import java.util.*
 
 fun main(args: Array<String>) {
-    val fileText = ResourceUtil.getFileText("src\\resources\\MCA-A000000615-001-241213.pca")
-    val hexString = ByteHelper.bytes2HexString(fileText)
-    println(hexString)
+    // val fileText = ResourceUtil.getFileText("src\\resources\\MCA-A000000615-001-241213.pca")
+    // val hexString = ByteHelper.bytes2HexString(fileText)
+    // println(hexString)
 }
 
 private fun parseDateString() {
