@@ -1,3 +1,4 @@
+import com.payermax.tool.ECRWorkKeyFacade
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -5,7 +6,10 @@ fun main(args: Array<String>) {
     // val fileText = ResourceUtil.getFileText("src\\resources\\MCA-A000000615-001-241213.pca")
     // val hexString = ByteHelper.bytes2HexString(fileText)
     // println(hexString)
+
+    ECRWorkKeyFacade().sample()
 }
+
 
 private fun parseDateString() {
     val pattern = "yyyy-MM-dd" + "'T'" + "HH:mm:ss.SSS" + "Z"
